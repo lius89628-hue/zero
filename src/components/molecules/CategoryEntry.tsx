@@ -4,9 +4,9 @@ import PrimaryView from '../atoms/PrimaryView';
 import AppHeader from '../atoms/AppHeader';
 import CustomInput from '../atoms/CustomInput';
 import PrimaryText from '../atoms/PrimaryText';
-import 图标 from '../atoms/图标s';
+import Icon from '../atoms/Icons';
 import PrimaryButton from '../atoms/PrimaryButton';
-import useTheme颜色s from '../../hooks/useTheme颜色s';
+import useThemeColors from '../../hooks/useThemeColors';
 import {goBack} from '../../utils/navigationUtils';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectUserId} from '../../redux/slice/userIdSlice';
@@ -31,7 +31,7 @@ interface CategoryEntryProps {
 }
 
 const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
-  const colors = useTheme颜色s();
+  const colors = useThemeColors();
   const dispatch = useDispatch<AppDispatch>();
   const categoryData = route?.params;
   const isAddButton = type === 'Add';
@@ -160,10 +160,10 @@ const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
               gs.rounded12,
               gs.rowCenter,
               gs.gap6,
-              {background颜色: isSelected ? colors.primaryText : colors.secondaryAccent},
+              {backgroundColor: isSelected ? colors.primaryText : colors.secondaryAccent},
             ]}>
             {category.icon ? (
-              <图标
+              <Icon
                 name={category.icon}
                 size={16}
                 color={isSelected ? colors.buttonText : (category.color ?? colors.secondaryText)}
@@ -210,16 +210,16 @@ const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
               gs.rowCenter,
               gs.gap8,
               gs.flex1,
-              {background颜色: colors.secondaryAccent},
+              {backgroundColor: colors.secondaryAccent},
             ]}>
             <View
               style={[
                 gs.size32,
                 gs.roundedFull,
                 gs.center,
-                {background颜色: colors.container颜色},
+                {backgroundColor: colors.container颜色},
               ]}>
-              <图标
+              <Icon
                 name={selected图标 ?? 'shapes'}
                 size={16}
                 color={colors.primaryText}
@@ -243,14 +243,14 @@ const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
               gs.rowCenter,
               gs.gap8,
               gs.flex1,
-              {background颜色: colors.secondaryAccent},
+              {backgroundColor: colors.secondaryAccent},
             ]}>
             <View
               style={[
                 gs.size32,
                 gs.roundedFull,
                 gs.center,
-                {background颜色: selected颜色 ?? colors.accentGreen},
+                {backgroundColor: selected颜色 ?? colors.accentGreen},
               ]}
             />
             <View style={gs.flex1}>
@@ -265,9 +265,9 @@ const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
         {filteredCategories.length !== 0 && isAddButton ? (
           <>
             <View style={[gs.rowCenter, gs.gap8, gs.mb8]}>
-              <View style={[gs.flex1, {height: 0.5, background颜色: colors.secondaryAccent}]} />
+              <View style={[gs.flex1, {height: 0.5, backgroundColor: colors.secondaryAccent}]} />
               <PrimaryText size={11} color={colors.secondaryText}>或从默认中选择</PrimaryText>
-              <View style={[gs.flex1, {height: 0.5, background颜色: colors.secondaryAccent}]} />
+              <View style={[gs.flex1, {height: 0.5, backgroundColor: colors.secondaryAccent}]} />
             </View>
             <View style={[gs.minH55, gs.mt5]}>
               <FlashList

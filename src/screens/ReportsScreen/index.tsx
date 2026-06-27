@@ -4,7 +4,7 @@ import {PieChart} from 'react-native-svg-charts';
 import HeaderContainer from '../../components/molecules/HeaderContainer';
 import {getFirstDayOfMonth, formatDate, getMonthIndex, getMonthNumber} from '../../utils/dateUtils';
 import {navigate} from '../../utils/navigationUtils';
-import use报表 from './use报表';
+import useReports from './useReports';
 import PrimaryView from '../../components/atoms/PrimaryView';
 import PrimaryText from '../../components/atoms/PrimaryText';
 import PieChartLabels from '../../components/atoms/PieChartLabels';
@@ -27,7 +27,7 @@ const 报表Screen = () => {
     handleMonthYearSelect,
     totalAmountForMonth,
     daysInMonth,
-  } = use报表();
+  } = useReports();
 
   const openMonthPicker = useCallback(() => {
     const monthIndex = getMonthIndex(selectedMonth);

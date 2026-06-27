@@ -8,13 +8,13 @@ import CustomInput from '../../components/atoms/CustomInput';
 import {gs} from '../../styles/globalStyles';
 
 const PersonalizeScreen = () => {
-  const {colors, setName, name, handleSubmit, handle跳过, nameSchema} = usePersonalize();
+  const {colors, setName, name, handleSubmit, handleSkip, nameSchema} = usePersonalize();
   const isValid = nameSchema.safeParse(name).success;
 
   return (
     <PrimaryView colors={colors} style={gs.justifyBetween} dismissKeyboardOnTouch>
       <View>
-        <TouchableOpacity style={[gs.selfEnd, gs.pt5p]} onPress={handle跳过}>
+        <TouchableOpacity style={[gs.selfEnd, gs.pt5p]} onPress={handleSkip}>
           <PrimaryText size={13} weight="medium" color={colors.secondaryText}>跳过</PrimaryText>
         </TouchableOpacity>
 

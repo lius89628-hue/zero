@@ -15,12 +15,12 @@ interface CategoryData {
 }
 
 const OnboardingScreen = () => {
-  const {colors, handle跳过, handleSubmit, toggleCategorySelection, isCategorySelected} = useOnboarding();
+  const {colors, handleSkip, handleSubmit, toggleCategorySelection, isCategorySelected} = useOnboarding();
 
   return (
     <PrimaryView colors={colors} style={gs.justifyBetween}>
       <View style={gs.flex1}>
-        <TouchableOpacity style={[gs.selfEnd, gs.pt5p]} onPress={handle跳过}>
+        <TouchableOpacity style={[gs.selfEnd, gs.pt5p]} onPress={handleSkip}>
           <PrimaryText size={13} weight="medium" color={colors.secondaryText}>跳过</PrimaryText>
         </TouchableOpacity>
 

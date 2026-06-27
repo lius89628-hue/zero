@@ -11,9 +11,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {selectUserId} from '../../redux/slice/userIdSlice';
 import {fetchAllDebts} from '../../redux/slice/allDebtDataSlice';
 import {fetchDebtsByDebtor} from '../../redux/slice/debtDataSlice';
-import 日期Picker from '../atoms/日期Picker';
+import DatePicker from '../atoms/DatePicker';
 import {DebtsScreenProp} from '../../screens/AddDebtsScreen';
-import {getISO日期Time} from '../../utils/dateUtils';
+import {getISODateTime} from '../../utils/dateUtils';
 import {expense金额Schema, expenseSchema} from '../../utils/validationSchema';
 import PrimaryText from '../atoms/PrimaryText';
 import {selectCurrencySymbol} from '../../redux/slice/currencyDataSlice';
@@ -29,27 +29,27 @@ const DebtEntry: React.FC<DebtEntryProps> = ({buttonText, route}) => {
   const colors = useThemeColors();
   const dispatch = useDispatch<AppDispatch>();
   const currencySymbol = useSelector(selectCurrencySymbol);
-  const {debtId = '', debt备注 = '', amount = 0, debtorName = '', debt日期 = '', debtorId = '', debtType = 'Borrow'} = route.params ?? {};
+  const {debtId = '', debtDescription = '', amount = 0, debtorName = '', debtDate = '', debtorId = '', debtType = 'Borrow'} = route.params ?? {};
   const isAddButton = buttonText === 'Add';
   const [hasInteracted, setHasInteracted] = useState(false);
-  const [debtName, setDebtName] = useState(isAddButton ? '' : debt备注);
-  const [debt金额, setDebt金额] = useState(isAddButton ? '' : String(amount));
-  const [createdAt, setCreatedAt] = useState(isAddButton ? getISO日期Time() : debt日期);
-  const [show日期Picker, setShow日期Picker] = useState(false);
+  const [debtName, setDebtName] = useState(isAddButton ? '' : debtDescription);
+  const [debtAmount, setDebtAmount] = useState(isAddButton ? '' : String(amount));
+  const [createdAt, setCreatedAt] = useState(isAddButton ? getISODateTime() : debtDate);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [debtsType, setDebtsType] = useState(isAddButton ? 'Borrow' : debtType);
   const userId = useSelector(selectUserId);
 
-  const debt金额Error = hasInteracted ? expense金额Schema?.safeParse(Number(debt金额)).error?.issues || [] : [];
+  const debtAmountError = hasInteracted ? expenseAmountSchema?.safeParse(Number(debtAmount)).error?.issues || [] : [];
 
   const isValid =
-    expenseSchema.safeParse(debtName).success && expense金额Schema.safeParse(Number(debt金额)).success;
+    expenseSchema.safeParse(debtName).success && expenseAmountSchema.safeParse(Number(debtAmount)).success;
 
   const handleAddDebt = useCallback(async () => {
     if (!isValid) {
       return;
     }
     try {
-      await createDebt(userId, Number(debt金额), debtName, debtorId, createdAt, debtsType);
+      await createDebt(userId, Number(debtAmount), debtName, debtorId, createdAt, debtsType);
       dispatch(fetchAllDebts());
       dispatch(fetchDebtsByDebtor(debtorId));
       goBack();
@@ -58,14 +58,14 @@ const DebtEntry: React.FC<DebtEntryProps> = ({buttonText, route}) => {
         console.error('Error creating debt:', error);
       }
     }
-  }, [isValid, userId, debt金额, debtName, debtorId, createdAt, debtsType, dispatch]);
+  }, [isValid, userId, debtAmount, debtName, debtorId, createdAt, debtsType, dispatch]);
 
   const handleUpdateDebt = useCallback(async () => {
     if (!isValid) {
       return;
     }
     try {
-      await updateDebtById(debtId, debtorId, Number(debt金额), debtName, createdAt, debtsType);
+      await updateDebtById(debtId, debtorId, Number(debtAmount), debtName, createdAt, debtsType);
 
       dispatch(fetchAllDebts());
       dispatch(fetchDebtsByDebtor(debtorId));
@@ -75,7 +75,7 @@ const DebtEntry: React.FC<DebtEntryProps> = ({buttonText, route}) => {
         console.error('Error updating debt:', error);
       }
     }
-  }, [isValid, debtId, debtorId, debt金额, debtName, createdAt, debtsType, dispatch]);
+  }, [isValid, debtId, debtorId, debtAmount, debtName, createdAt, debtsType, dispatch]);
 
   const handleTextInputFocus = useCallback(() => {
     setHasInteracted(true);
@@ -144,23 +144,23 @@ const DebtEntry: React.FC<DebtEntryProps> = ({buttonText, route}) => {
             gs.row,
             {
               backgroundColor: colors.secondaryAccent,
-              marginBottom: debt金额Error.length > 0 ? 5 : 15,
+              marginBottom: debtAmountError.length > 0 ? 5 : 15,
             },
           ]}>
           <PrimaryText size={15} variant="number" color={colors.secondaryText}>{currencySymbol}</PrimaryText>
           <TextInput
             style={[gs.px15, gs.h48, gs.wFull, gs.numMedium, gs.noFontPadding, {color: colors.primaryText}]}
-            value={debt金额}
-            onChangeText={setDebt金额}
+            value={debtAmount}
+            onChangeText={setDebtAmount}
             placeholder={'0'}
             onChange={handleTextInputFocus}
             placeholderTextColor={colors.secondaryText}
             keyboardType="numeric"
           />
         </View>
-        {debt金额Error.length > 0 && (
+        {debtAmountError.length > 0 && (
           <View style={gs.mb10}>
-            {debt金额Error.map((error: {message: string}) => (
+            {debtAmountError.map((error: {message: string}) => (
               <View key={error.message}>
                 <PrimaryText size={12} color={colors.accentRed}>
                   {error.message}
@@ -170,10 +170,10 @@ const DebtEntry: React.FC<DebtEntryProps> = ({buttonText, route}) => {
           </View>
         )}
 
-        <日期Picker
-          setShow日期Picker={setShow日期Picker}
+        <DatePicker
+          setShowDatePicker={setShowDatePicker}
           createdAt={createdAt}
-          show日期Picker={show日期Picker}
+          showDatePicker={showDatePicker}
           setCreatedAt={setCreatedAt}
           label="日期"
         />

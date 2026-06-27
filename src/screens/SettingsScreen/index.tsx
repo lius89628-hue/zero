@@ -2,7 +2,7 @@ import {ScrollView, Text, TouchableOpacity, View, Platform, Share} from 'react-n
 import React, {useCallback} from 'react';
 import Icon from '../../components/atoms/Icons';
 import {goBack} from '../../utils/navigationUtils';
-import use设置 from './use设置';
+import useSettings from './useSettings';
 import PrimaryView from '../../components/atoms/PrimaryView';
 import PrimaryText from '../../components/atoms/PrimaryText';
 import RNFS from 'react-native-fs';
@@ -10,10 +10,10 @@ import {generateUniqueKey, requestStoragePermission} from '../../utils/dataUtils
 import {getTimestamp} from '../../utils/dateUtils';
 import {CURRENT_EXPORT_VERSION} from '../../backend/export/format';
 import {SheetManager} from 'react-native-actions-sheet';
-import {Colors} from '../../hooks/use主题Colors';
+import {Colors} from '../../hooks/useThemeColors';
 import {gs, hitSlop} from '../../styles/globalStyles';
 
-interface 设置RowProps {
+interface SettingRowProps {
   icon: string;
   label: string;
   subtitle?: string;
@@ -24,7 +24,7 @@ interface 设置RowProps {
   colors: Colors;
 }
 
-const 设置Row: React.FC<设置RowProps> = ({icon, label, subtitle, value, valueNode, onPress, destructive, colors}) => (
+const SettingRow: React.FC<SettingRowProps> = ({icon, label, subtitle, value, valueNode, onPress, destructive, colors}) => (
   <TouchableOpacity onPress={onPress} activeOpacity={onPress ? 0.6 : 1} disabled={!onPress}>
     <View style={[gs.rowCenter, gs.px14, gs.py12, gs.gap10]}>
       <View style={[gs.size32, gs.rounded8, gs.center, {backgroundColor: colors.secondaryAccent}]}>
@@ -47,17 +47,17 @@ const 设置Row: React.FC<设置RowProps> = ({icon, label, subtitle, value, valu
   </TouchableOpacity>
 );
 
-const 设置Screen = () => {
+const SettingsScreen = () => {
   const {
-    app版本,
+    appVersion,
     colors,
-    handle主题Selection,
-    handle名称Update,
-    handle货币Update,
-    selected主题,
-    user名称,
+    handleThemeSelection,
+    handleNameUpdate,
+    handleCurrencyUpdate,
+    selectedTheme,
+    userName,
     currencySymbol,
-    currency名称,
+    currencyName,
     handleReportBug,
     handleRateNow,
     handleGithub,
@@ -67,18 +67,18 @@ const 设置Screen = () => {
     allData,
     handleExportResult,
     requestStorageViaDialog,
-  } = use设置();
+  } = useSettings();
 
-  const handleOpen货币Sheet = useCallback(() => {
+  const handleOpenCurrencySheet = useCallback(() => {
     void SheetManager.show('currency-picker-sheet', {
       payload: {
-        selected货币: {code: '', name: currency名称, symbol: currencySymbol},
+        selectedCurrency: {code: '', name: currencyName, symbol: currencySymbol},
         onSelect: (currency: {code: string; name: string; symbol: string}) => {
-          handle货币Update(currency);
+          handleCurrencyUpdate(currency);
         },
       },
     });
-  }, [currency名称, currencySymbol, handle货币Update]);
+  }, [currencyName, currencySymbol, handleCurrencyUpdate]);
 
   const exportData = async (dataToExport: unknown) => {
     try {
@@ -88,11 +88,11 @@ const 设置Screen = () => {
       }
 
       const currentDateAndTime = getTimestamp();
-      const file名称 = `zero_v${CURRENT_EXPORT_VERSION}_${currentDateAndTime}.json`;
+      const fileName = `zero_v${CURRENT_EXPORT_VERSION}_${currentDateAndTime}.json`;
       const jsonData = JSON.stringify({key: generateUniqueKey(), version: CURRENT_EXPORT_VERSION, data: dataToExport}, null, 2);
 
       if (Platform.OS === 'ios') {
-        const path = `${RNFS.DocumentDirectoryPath}/${file名称}`;
+        const path = `${RNFS.DocumentDirectoryPath}/${fileName}`;
 
         await RNFS.writeFile(path, jsonData, 'utf8');
 
@@ -110,7 +110,7 @@ const 设置Screen = () => {
           return;
         }
 
-        const path = `${RNFS.DownloadDirectoryPath}/${file名称}`;
+        const path = `${RNFS.DownloadDirectoryPath}/${fileName}`;
 
         await RNFS.writeFile(path, jsonData, 'utf8');
         handleExportResult(true);
@@ -123,16 +123,16 @@ const 设置Screen = () => {
     }
   };
 
-  const open主题Picker = useCallback(() => {
+  const openThemePicker = useCallback(() => {
     void SheetManager.show('theme-picker-sheet', {
       payload: {
-        current主题: selected主题,
+        currentTheme: selectedTheme,
         onSelect: (theme: string) => {
-          handle主题Selection(theme);
+          handleThemeSelection(theme);
         },
       },
     });
-  }, [selected主题, handle主题Selection]);
+  }, [selectedTheme, handleThemeSelection]);
 
   return (
     <PrimaryView colors={colors} dismissKeyboardOnTouch>
@@ -151,40 +151,40 @@ const 设置Screen = () => {
           个性化
         </PrimaryText>
         <View style={[gs.rounded12, gs.overflowHidden, {backgroundColor: colors.containerColor}]}>
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="sun-moon"
             label="主题"
-            value={selected主题.charAt(0).toUpperCase() + selected主题.slice(1)}
-            onPress={open主题Picker}
+            value={selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)}
+            onPress={openThemePicker}
           />
           <View style={[gs.mx16, {height: 1, backgroundColor: colors.secondaryAccent}]} />
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="user"
             label="名称"
-            value={user名称}
+            value={userName}
             onPress={() => {
               void SheetManager.show('change-name-sheet', {
                 payload: {
-                  current名称: user名称,
-                  onUpdate: (new名称: string) => {
-                    handle名称Update(new名称);
+                  currentName: userName,
+                  onUpdate: (newName: string) => {
+                    handleNameUpdate(newName);
                   },
                 },
               });
             }}
           />
           <View style={[gs.mx16, {height: 1, backgroundColor: colors.secondaryAccent}]} />
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="banknote"
             label="货币"
-            onPress={handleOpen货币Sheet}
+            onPress={handleOpenCurrencySheet}
             valueNode={
               <View style={gs.itemsEnd}>
                 <PrimaryText size={13} color={colors.secondaryText} variant="number">{currencySymbol}</PrimaryText>
-                <PrimaryText size={10} color={colors.secondaryText}>{currency名称}</PrimaryText>
+                <PrimaryText size={10} color={colors.secondaryText}>{currencyName}</PrimaryText>
               </View>
             }
           />
@@ -198,7 +198,7 @@ const 设置Screen = () => {
           你的数据
         </PrimaryText>
         <View style={[gs.rounded12, gs.overflowHidden, {backgroundColor: colors.containerColor}]}>
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="download"
             label="导出数据"
@@ -206,7 +206,7 @@ const 设置Screen = () => {
             onPress={() => exportData(allData)}
           />
           <View style={[gs.mx16, {height: 1, backgroundColor: colors.secondaryAccent}]} />
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="trash-2"
             label="删除所有数据"
@@ -224,7 +224,7 @@ const 设置Screen = () => {
           关于
         </PrimaryText>
         <View style={[gs.rounded12, gs.overflowHidden, {backgroundColor: colors.containerColor}]}>
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="bug"
             label="报告问题"
@@ -232,7 +232,7 @@ const 设置Screen = () => {
             onPress={handleReportBug}
           />
           <View style={[gs.mx16, {height: 1, backgroundColor: colors.secondaryAccent}]} />
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="star"
             label="评价应用"
@@ -240,7 +240,7 @@ const 设置Screen = () => {
             onPress={handleRateNow}
           />
           <View style={[gs.mx16, {height: 1, backgroundColor: colors.secondaryAccent}]} />
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="code"
             label="源代码"
@@ -248,25 +248,25 @@ const 设置Screen = () => {
             onPress={handleGithub}
           />
           <View style={[gs.mx16, {height: 1, backgroundColor: colors.secondaryAccent}]} />
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="shield"
             label="隐私政策"
             onPress={handlePrivacyPolicy}
           />
           <View style={[gs.mx16, {height: 1, backgroundColor: colors.secondaryAccent}]} />
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="file-text"
             label="使用条款"
             onPress={handleTermsAndConditions}
           />
           <View style={[gs.mx16, {height: 1, backgroundColor: colors.secondaryAccent}]} />
-          <设置Row
+          <SettingRow
             colors={colors}
             icon="info"
             label="版本"
-            value={`v${app版本}`}
+            value={`v${appVersion}`}
           />
         </View>
 
@@ -284,4 +284,4 @@ const 设置Screen = () => {
   );
 };
 
-export default 设置Screen;
+export default SettingsScreen;
