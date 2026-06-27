@@ -4,7 +4,7 @@ import PrimaryView from '../atoms/PrimaryView';
 import AppHeader from '../atoms/AppHeader';
 import CustomInput from '../atoms/CustomInput';
 import PrimaryText from '../atoms/PrimaryText';
-import CategoryContainer from './CategoryContainer';
+import 分类Container from './分类Container';
 import PrimaryButton from '../atoms/PrimaryButton';
 import useThemeColors from '../../hooks/useThemeColors';
 import {goBack, navigate} from '../../utils/navigationUtils';
@@ -17,8 +17,8 @@ import {fetchExpensesByMonth, invalidateExpenseCache} from '../../redux/slice/ex
 import DatePicker from '../atoms/DatePicker';
 import {getISODateTime, formatDate} from '../../utils/dateUtils';
 import {ensureYearInCache} from '../../utils/availableYearsCache';
-import {expenseAmountSchema, expenseDescriptionSchema, expenseSchema} from '../../utils/validationSchema';
-import {CategoryData as CategoryDocType} from '../../watermelondb/services';
+import {expense金额Schema, expense备注Schema, expenseSchema} from '../../utils/validationSchema';
+import {分类Data as 分类DocType} from '../../watermelondb/services';
 import {AppDispatch} from '../../redux/store';
 import {gs} from '../../styles/globalStyles';
 
@@ -29,29 +29,29 @@ interface ExpenseEntryProps {
 
 const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
   const expenseData = route?.params;
-  const isAddButton = type === 'Add';
+  const is添加Button = type === '添加';
   const [hasInteracted, setHasInteracted] = useState(false);
   const categories = useSelector(selectActiveCategories);
-  const [selectedCategories, setSelectedCategories] = useState<CategoryDocType[]>(
-    isAddButton
+  const [selectedCategories, setSelectedCategories] = useState<分类DocType[]>(
+    is添加Button
       ? []
-      : categories?.filter((category: CategoryDocType) => category?.name === expenseData?.category?.name) ?? [],
+      : categories?.filter((category: 分类DocType) => category?.name === expenseData?.category?.name) ?? [],
   );
 
-  const [createdAt, setCreatedAt] = useState(isAddButton ? getISODateTime() : expenseData?.expenseDate ?? getISODateTime());
+  const [createdAt, setCreatedAt] = useState(is添加Button ? getISODateTime() : expenseData?.expenseDate ?? getISODateTime());
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [expenseTitle, setExpenseTitle] = useState(isAddButton ? '' : expenseData?.expenseTitle ?? '');
-  const [expenseDescription, setExpenseDescription] = useState(isAddButton ? '' : expenseData?.expenseDescription ?? '');
-  const [expenseAmount, setExpenseAmount] = useState(isAddButton ? '' : String(expenseData?.expenseAmount ?? ''));
+  const [expense标题, setExpense标题] = useState(is添加Button ? '' : expenseData?.expense标题 ?? '');
+  const [expense备注, setExpense备注] = useState(is添加Button ? '' : expenseData?.expense备注 ?? '');
+  const [expense金额, setExpense金额] = useState(is添加Button ? '' : String(expenseData?.expense金额 ?? ''));
 
-  const expenseAmountError = hasInteracted
-    ? expenseAmountSchema?.safeParse(Number(expenseAmount)).error?.issues || []
+  const expense金额Error = hasInteracted
+    ? expense金额Schema?.safeParse(Number(expense金额)).error?.issues || []
     : [];
 
   const isValid =
-    expenseSchema.safeParse(expenseTitle).success &&
-    expenseDescriptionSchema.safeParse(expenseDescription).success &&
-    expenseAmountSchema.safeParse(Number(expenseAmount)).success;
+    expenseSchema.safeParse(expense标题).success &&
+    expense备注Schema.safeParse(expense备注).success &&
+    expense金额Schema.safeParse(Number(expense金额)).success;
 
   const userId = useSelector(selectUserId);
   const currencySymbol = useSelector(selectCurrencySymbol);
@@ -63,21 +63,21 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  const handleAddCategory = useCallback(() => {
-    navigate('AddCategoryScreen');
+  const handle添加分类 = useCallback(() => {
+    navigate('添加分类Screen');
   }, []);
 
   const handleTextInputFocus = useCallback(() => {
     setHasInteracted(true);
   }, []);
 
-  const handleAddExpense = useCallback(async () => {
+  const handle添加Expense = useCallback(async () => {
     if (!isValid || selectedCategories.length === 0) {
       return;
     }
     const categoryId = selectedCategories[0].id;
     try {
-      await createExpense(userId, expenseTitle, Number(expenseAmount), expenseDescription, categoryId, createdAt);
+      await createExpense(userId, expense标题, Number(expense金额), expense备注, categoryId, createdAt);
 
       const yearMonth = formatDate(createdAt, 'YYYY-MM');
       const year = Number.parseInt(formatDate(createdAt, 'YYYY'), 10);
@@ -90,9 +90,9 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
         console.error('Error creating expense:', error);
       }
     }
-  }, [isValid, selectedCategories, userId, expenseTitle, expenseAmount, expenseDescription, createdAt, dispatch]);
+  }, [isValid, selectedCategories, userId, expense标题, expense金额, expense备注, createdAt, dispatch]);
 
-  const handleUpdateExpense = useCallback(async () => {
+  const handle更新Expense = useCallback(async () => {
     if (!isValid || selectedCategories.length === 0) {
       return;
     }
@@ -101,9 +101,9 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
       await updateExpenseById(
         expenseData?.expenseId,
         categoryId,
-        expenseTitle,
-        Number(expenseAmount),
-        expenseDescription,
+        expense标题,
+        Number(expense金额),
+        expense备注,
         createdAt,
       );
 
@@ -122,15 +122,15 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
     isValid,
     selectedCategories,
     expenseData?.expenseId,
-    expenseTitle,
-    expenseAmount,
-    expenseDescription,
+    expense标题,
+    expense金额,
+    expense备注,
     createdAt,
     dispatch,
   ]);
 
-  const toggleCategorySelection = useCallback(
-    (category: CategoryDocType) => {
+  const toggle分类Selection = useCallback(
+    (category: 分类DocType) => {
       if (selectedCategories.includes(category)) {
         setSelectedCategories([]);
       } else {
@@ -143,27 +143,27 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
   return (
     <PrimaryView colors={colors} dismissKeyboardOnTouch>
       <View style={[gs.mb20, gs.mt20]}>
-        <AppHeader onPress={() => goBack()} colors={colors} text={isAddButton ? 'Add Transaction' : 'Edit Transaction'} />
+        <AppHeader onPress={() => goBack()} colors={colors} text={is添加Button ? '添加记录' : '编辑记录'} />
       </View>
 
       <CustomInput
         colors={colors}
-        input={expenseTitle}
-        setInput={setExpenseTitle}
-        placeholder="eg. Biryani"
-        label="Title"
+        input={expense标题}
+        setInput={setExpense标题}
+        placeholder="例如：午餐"
+        label="标题"
         schema={expenseSchema}
       />
       <CustomInput
         colors={colors}
-        input={expenseDescription}
-        setInput={setExpenseDescription}
-        placeholder="eg. From Aroma's"
-        label="Description"
-        schema={expenseDescriptionSchema}
+        input={expense备注}
+        setInput={setExpense备注}
+        placeholder="例如：在公司附近"
+        label="备注"
+        schema={expense备注Schema}
       />
 
-      <PrimaryText size={12} color={colors.secondaryText} style={gs.mb5}>Amount</PrimaryText>
+      <PrimaryText size={12} color={colors.secondaryText} style={gs.mb5}>金额</PrimaryText>
       <View
         style={[
           gs.h48,
@@ -174,23 +174,23 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
           gs.row,
           {
             backgroundColor: colors.secondaryAccent,
-            marginBottom: expenseAmountError.length > 0 ? 5 : 15,
+            marginBottom: expense金额Error.length > 0 ? 5 : 15,
           },
         ]}>
         <PrimaryText size={15} variant="number" color={colors.secondaryText}>{currencySymbol}</PrimaryText>
         <TextInput
           style={[gs.px15, gs.h48, gs.wFull, gs.numMedium, gs.noFontPadding, {color: colors.primaryText}]}
-          value={expenseAmount}
-          onChangeText={setExpenseAmount}
+          value={expense金额}
+          onChangeText={setExpense金额}
           placeholder={'0'}
           onChange={handleTextInputFocus}
           placeholderTextColor={colors.secondaryText}
           keyboardType="numeric"
         />
       </View>
-      {expenseAmountError.length > 0 && (
+      {expense金额Error.length > 0 && (
         <View style={gs.mb10}>
-          {expenseAmountError.map((error: {message: string}) => (
+          {expense金额Error.map((error: {message: string}) => (
             <View key={error.message}>
               <PrimaryText size={12} color={colors.accentRed}>
                 {error.message}
@@ -208,18 +208,18 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
         label="Date"
       />
 
-      <PrimaryText size={12} color={colors.secondaryText} style={gs.mb8}>Category</PrimaryText>
+      <PrimaryText size={12} color={colors.secondaryText} style={gs.mb8}>分类</PrimaryText>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <CategoryContainer
+        <分类Container
           categories={categories}
           colors={colors}
-          toggleCategorySelection={toggleCategorySelection}
+          toggle分类Selection={toggle分类Selection}
           selectedCategories={selectedCategories}
         />
         <PrimaryButton
-          onPress={handleAddCategory}
+          onPress={handle添加分类}
           colors={colors}
-          buttonTitle="Add Category"
+          button标题="添加 分类"
           variant="ghost"
           size="sm"
           fullWidth={false}
@@ -227,9 +227,9 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
       </ScrollView>
       <View style={gs.mt5}>
         <PrimaryButton
-          onPress={isAddButton ? handleAddExpense : handleUpdateExpense}
+          onPress={is添加Button ? handle添加Expense : handle更新Expense}
           colors={colors}
-          buttonTitle={isAddButton ? 'Add' : 'Update'}
+          button标题={is添加Button ? '添加' : '更新'}
           disabled={!isValid}
         />
       </View>

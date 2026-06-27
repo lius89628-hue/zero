@@ -249,7 +249,7 @@ const DebtList: React.FC<DebtListProps> = ({
         <Icon name="hand-coins" size={22} color={colors.secondaryText} />
       </View>
       <PrimaryText size={13} color={colors.secondaryText} style={gs.mt10}>
-        No entries yet
+        暂无记录
       </PrimaryText>
     </View>
   ), [colors]);

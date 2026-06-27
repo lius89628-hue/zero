@@ -4,7 +4,7 @@ import {PieChart} from 'react-native-svg-charts';
 import HeaderContainer from '../../components/molecules/HeaderContainer';
 import {getFirstDayOfMonth, formatDate, getMonthIndex, getMonthNumber} from '../../utils/dateUtils';
 import {navigate} from '../../utils/navigationUtils';
-import useReports from './useReports';
+import use报表 from './use报表';
 import PrimaryView from '../../components/atoms/PrimaryView';
 import PrimaryText from '../../components/atoms/PrimaryText';
 import PieChartLabels from '../../components/atoms/PieChartLabels';
@@ -15,7 +15,7 @@ import {SheetManager} from 'react-native-actions-sheet';
 import Icon from '../../components/atoms/Icons';
 import {gs} from '../../styles/globalStyles';
 
-const ReportsScreen = () => {
+const 报表Screen = () => {
   const {
     colors,
     selectedYear,
@@ -27,7 +27,7 @@ const ReportsScreen = () => {
     handleMonthYearSelect,
     totalAmountForMonth,
     daysInMonth,
-  } = useReports();
+  } = use报表();
 
   const openMonthPicker = useCallback(() => {
     const monthIndex = getMonthIndex(selectedMonth);
@@ -221,7 +221,7 @@ const ReportsScreen = () => {
 
   return (
     <PrimaryView colors={colors} useBottomPadding={false}>
-      <HeaderContainer headerText={'Reports'} />
+      <HeaderContainer headerText={'报表'} />
       <View style={[gs.row, gs.wFull, gs.justifyBetween, gs.gap6, gs.mt10]}>
         <TouchableOpacity
           onPress={openMonthPicker}
@@ -233,13 +233,13 @@ const ReportsScreen = () => {
           <Icon name="chevron-down" size={14} color={colors.buttonText} />
         </TouchableOpacity>
         <View style={[gs.flex1, gs.px12, gs.py10, gs.rounded8, {backgroundColor: colors.secondaryAccent}]}>
-          <PrimaryText size={11} color={colors.secondaryText}>Total</PrimaryText>
+          <PrimaryText size={11} color={colors.secondaryText}>总计</PrimaryText>
           <PrimaryText size={14} weight="semibold" variant="number" numberOfLines={1}>
             {currencySymbol}{formatCurrency(totalAmountForMonth)}
           </PrimaryText>
         </View>
         <View style={[gs.flex1, gs.px12, gs.py10, gs.rounded8, {backgroundColor: colors.secondaryAccent}]}>
-          <PrimaryText size={11} color={colors.secondaryText}>Avg/Day</PrimaryText>
+          <PrimaryText size={11} color={colors.secondaryText}>日均</PrimaryText>
           <PrimaryText size={14} weight="semibold" variant="number" numberOfLines={1}>
             {currencySymbol}{formatCurrency(totalAmountForMonth / daysInMonth)}
           </PrimaryText>
@@ -261,7 +261,7 @@ const ReportsScreen = () => {
             <View style={[gs.row, gs.wrap]}>{renderCalendar()}</View>
 
             <View style={[gs.rowCenter, gs.justifyCenter, gs.mt10, gs.mb10, gs.gap4]}>
-              <PrimaryText size={11} color={colors.secondaryText}>Less</PrimaryText>
+              <PrimaryText size={11} color={colors.secondaryText}>少</PrimaryText>
               {[0.1, 0.3, 0.5, 0.75, 1].map((opacity, i) => (
                 <View
                   key={`legend-${i}`}
@@ -273,7 +273,7 @@ const ReportsScreen = () => {
                   ]}
                 />
               ))}
-              <PrimaryText size={11} color={colors.secondaryText}>More</PrimaryText>
+              <PrimaryText size={11} color={colors.secondaryText}>多</PrimaryText>
             </View>
 
             <View style={[gs.mt20, gs.mb20]}>{renderPieChart()}</View>
@@ -284,4 +284,4 @@ const ReportsScreen = () => {
   );
 };
 
-export default ReportsScreen;
+export default 报表Screen;

@@ -66,9 +66,9 @@ const DebtorList: React.FC<DebtorListProps> = ({colors, debtors, allDebts, curre
       const debtorId = String(debtor.id);
       const totalDebt = getDebtTotal(debtorId);
       const amountColor = getAmountColor(debtorId);
-      let debtLabel = 'Settled';
-      if (totalDebt > 0) debtLabel = 'You owe';
-      else if (totalDebt < 0) debtLabel = 'Owes you';
+      let debtLabel = '已结清';
+      if (totalDebt > 0) debtLabel = '你欠';
+      else if (totalDebt < 0) debtLabel = '欠你';
 
       return (
         <TouchableOpacity
@@ -113,7 +113,7 @@ const DebtorList: React.FC<DebtorListProps> = ({colors, debtors, allDebts, curre
         <Icon name="users" size={22} color={colors.secondaryText} />
       </View>
       <PrimaryText size={13} color={colors.secondaryText} style={gs.mt10}>
-        No one here yet
+        暂无人员
       </PrimaryText>
     </View>
   ), [colors]);

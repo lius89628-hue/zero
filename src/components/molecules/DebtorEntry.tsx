@@ -34,9 +34,9 @@ const DebtorEntry: React.FC<DebtorEntryProps> = ({type, route}) => {
   const debtorData = route?.params;
   const isAddButton = type === 'Add';
   const dispatch = useDispatch<AppDispatch>();
-  const [debtorTitle, setDebtorTitle] = useState(isAddButton ? '' : debtorData?.debtorName ?? '');
+  const [debtorTitle, setDebtorTitle] = useState(isAddButton ? '' : debtorData?.debtor名称 ?? '');
   const [selectedCategories, setSelectedCategories] = useState<Array<DebtCategory>>(
-    isAddButton ? [] : debtCategories.filter(category => category.name === debtorData?.debtorType),
+    isAddButton ? [] : debtCategories.filter(category => category.name === debtorData?.debtor类型),
   );
   const userId = useSelector(selectUserId);
   const isValid = nameSchema.safeParse(debtorTitle).success;
@@ -93,10 +93,10 @@ const DebtorEntry: React.FC<DebtorEntryProps> = ({type, route}) => {
     <PrimaryView colors={colors} style={gs.justifyBetween} dismissKeyboardOnTouch>
       <View>
         <View style={[gs.mb20, gs.mt20]}>
-          <AppHeader onPress={goBack} colors={colors} text={isAddButton ? 'Add Person' : 'Edit Person'} />
+          <AppHeader onPress={goBack} colors={colors} text={isAddButton ? '添加个人' : '编辑个人'} />
         </View>
 
-        <PrimaryText size={12} color={colors.secondaryText} style={gs.mb8}>Type</PrimaryText>
+        <PrimaryText size={12} color={colors.secondaryText} style={gs.mb8}>类型</PrimaryText>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={gs.mb15}>
           <CategoryContainer
             categories={debtCategories}
@@ -110,8 +110,8 @@ const DebtorEntry: React.FC<DebtorEntryProps> = ({type, route}) => {
           colors={colors}
           input={debtorTitle}
           setInput={setDebtorTitle}
-          placeholder="eg. John Doe or Axis"
-          label="Name"
+          placeholder="例如：张三或招商银行"
+          label="名称"
           schema={nameSchema}
         />
       </View>

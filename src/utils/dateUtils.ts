@@ -113,12 +113,12 @@ export const getYesterday = (): Dayjs => dayjs().subtract(1, 'day');
 
 export const formatCalendar = (date: DateInput): string => {
   return parseDate(date).calendar(null, {
-    sameDay: '[Today]',
-    nextDay: '[Tomorrow]',
+    sameDay: '[今天]',
+    nextDay: '[明天]',
     nextWeek: 'dddd',
-    lastDay: '[Yesterday]',
-    lastWeek: '[Last] dddd',
-    sameElse: 'Do MMM YYYY',
+    lastDay: '[昨天]',
+    lastWeek: '[上] dddd',
+    sameElse: 'YYYY年M月D日',
   });
 };
 

@@ -146,7 +146,7 @@ const CategoryScreen = () => {
   );
 
   const ListEmptyComponent = useCallback(
-    () => <EmptyState colors={colors} type={'Categories'} style={gs.mt30p} />,
+    () => <EmptyState colors={colors} type={'分类'} style={gs.mt30p} />,
     [colors],
   );
 
@@ -154,7 +154,7 @@ const CategoryScreen = () => {
     <>
       <PrimaryView colors={colors} useSidePadding={false} useBottomPadding={false}>
         <View style={[gs.mb15, gs.px16]}>
-          <HeaderContainer headerText={'Categories'} />
+          <HeaderContainer headerText={'分类'} />
         </View>
         <View style={gs.flex1}>
           <FlashList
@@ -173,7 +173,7 @@ const CategoryScreen = () => {
           style={[gs.size50, gs.roundedFull, gs.center, {backgroundColor: colors.primaryText}]}
           onPress={() => navigate('AddCategoryScreen')}
           hitSlop={hitSlop}
-          accessibilityLabel="Add new category"
+          accessibilityLabel="添加新分类"
           accessibilityRole="button">
           <Icon name="plus" size={24} color={colors.buttonText} />
         </TouchableOpacity>

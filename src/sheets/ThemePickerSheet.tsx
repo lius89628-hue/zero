@@ -21,7 +21,7 @@ const ThemePickerSheet: React.FC<SheetProps<'theme-picker-sheet'>> = React.memo(
     <CustomBottomSheet
       sheetId={props.sheetId}
       header={{
-        title: 'Select Theme',
+        title: '选择主题',
         showCloseButton: true,
         onClosePress: () => void SheetManager.hide(props.sheetId),
       }}
@@ -53,7 +53,7 @@ const ThemePickerSheet: React.FC<SheetProps<'theme-picker-sheet'>> = React.memo(
           activeOpacity={0.7}
           style={[gs.mt10, gs.py12, gs.rounded10, gs.center, {backgroundColor: colors.accentGreen}]}>
           <PrimaryText size={14} weight="semibold" color={colors.buttonText}>
-            Apply
+            应用
           </PrimaryText>
         </TouchableOpacity>
       </View>

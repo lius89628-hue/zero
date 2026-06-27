@@ -56,7 +56,7 @@ const CategoryTransactionScreen = () => {
           <Icon name="receipt" size={22} color={colors.secondaryText} />
         </View>
         <PrimaryText size={13} color={colors.secondaryText} style={gs.mt10}>
-          No transactions in {categoryName}
+          中暂无记录 {categoryName}
         </PrimaryText>
       </View>
     ),

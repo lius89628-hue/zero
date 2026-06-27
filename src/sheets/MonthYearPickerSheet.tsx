@@ -41,7 +41,7 @@ const MonthYearPickerSheet: React.FC<SheetProps<'month-year-picker-sheet'>> = Re
     <CustomBottomSheet
       sheetId={props.sheetId}
       header={{
-        title: 'Select Month & Year',
+        title: '选择年月',
         showCloseButton: true,
         onClosePress: () => void SheetManager.hide(props.sheetId),
       }}
@@ -113,7 +113,7 @@ const MonthYearPickerSheet: React.FC<SheetProps<'month-year-picker-sheet'>> = Re
             {backgroundColor: colors.accentGreen},
           ]}>
           <PrimaryText size={14} weight="semibold" color={colors.buttonText}>
-            Done
+            完成
           </PrimaryText>
         </TouchableOpacity>
       </View>

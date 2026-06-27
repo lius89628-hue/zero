@@ -34,7 +34,7 @@ const HomeIcon = ({color}: {color: string}) => (
     <View style={[gs.h26, gs.center]}>
       <Icon name="home" size={ICON_SIZE} color={color} />
     </View>
-    <Text style={[gs.text10, gs.fontMedium, gs.noFontPadding, gs.textCenter, gs.mt2, {color}]}>Home</Text>
+    <Text style={[gs.text10, gs.fontMedium, gs.noFontPadding, gs.textCenter, gs.mt2, {color}]}>首页</Text>
   </View>
 );
 
@@ -43,7 +43,7 @@ const ReportsIcon = ({color}: {color: string}) => (
     <View style={[gs.h26, gs.center]}>
       <Icon name="bar-chart-3" size={ICON_SIZE} color={color} />
     </View>
-    <Text style={[gs.text10, gs.fontMedium, gs.noFontPadding, gs.textCenter, gs.mt2, {color}]}>Reports</Text>
+    <Text style={[gs.text10, gs.fontMedium, gs.noFontPadding, gs.textCenter, gs.mt2, {color}]}>报表</Text>
   </View>
 );
 
@@ -52,7 +52,7 @@ const DebtIcon = ({color}: {color: string}) => (
     <View style={[gs.h26, gs.center]}>
       <Icon name="credit-card" size={ICON_SIZE} color={color} />
     </View>
-    <Text style={[gs.text10, gs.fontMedium, gs.noFontPadding, gs.textCenter, gs.mt2, {color}]}>Debts</Text>
+    <Text style={[gs.text10, gs.fontMedium, gs.noFontPadding, gs.textCenter, gs.mt2, {color}]}>债务</Text>
   </View>
 );
 
@@ -61,7 +61,7 @@ const CategoriesIcon = ({color}: {color: string}) => (
     <View style={[gs.h26, gs.center]}>
       <Icon name="shapes" size={ICON_SIZE} color={color} />
     </View>
-    <Text style={[gs.text10, gs.fontMedium, gs.noFontPadding, gs.textCenter, gs.mt2, {color}]}>Categories</Text>
+    <Text style={[gs.text10, gs.fontMedium, gs.noFontPadding, gs.textCenter, gs.mt2, {color}]}>分类</Text>
   </View>
 );
 

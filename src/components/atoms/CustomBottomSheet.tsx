@@ -9,10 +9,10 @@ import {gs} from '../../styles/globalStyles';
 
 export interface CustomBottomSheetHeader {
   title?: string;
-  showCloseButton?: boolean;
+  show关闭Button?: boolean;
   customComponent?: ReactNode;
   style?: StyleProp<ViewStyle>;
-  onClosePress?: () => void;
+  on关闭Press?: () => void;
 }
 
 export interface CustomBottomSheetProps {
@@ -28,7 +28,7 @@ export interface CustomBottomSheetProps {
   containerStyle?: StyleProp<ViewStyle>;
   indicatorStyle?: StyleProp<ViewStyle>;
   onOpen?: () => void;
-  onClose?: () => void;
+  on关闭?: () => void;
 }
 
 function CustomBottomSheetComponent({
@@ -44,7 +44,7 @@ function CustomBottomSheetComponent({
   containerStyle,
   indicatorStyle,
   onOpen,
-  onClose,
+  on关闭,
 }: Readonly<CustomBottomSheetProps>) {
   const colors = useThemeColors();
   const safeAreaInsets = useSafeAreaInsets();
@@ -69,13 +69,13 @@ function CustomBottomSheetComponent({
     onOpen?.();
   }, [onOpen]);
 
-  const handleClose = useCallback(() => {
-    onClose?.();
-  }, [onClose]);
+  const handle关闭 = useCallback(() => {
+    on关闭?.();
+  }, [on关闭]);
 
-  const handleClosePress = useCallback(() => {
-    if (header?.onClosePress) {
-      header.onClosePress();
+  const handle关闭Press = useCallback(() => {
+    if (header?.on关闭Press) {
+      header.on关闭Press();
     } else {
       SheetManager.hide(sheetId);
     }
@@ -120,12 +120,12 @@ function CustomBottomSheetComponent({
                   {header.title}
                 </PrimaryText>
               )}
-              {header.showCloseButton && (
+              {header.show关闭Button && (
                 <TouchableOpacity
-                  onPress={handleClosePress}
+                  onPress={handle关闭Press}
                   style={[gs.size35, gs.center, gs.rounded16, gs.ml12, {backgroundColor: colors.secondaryAccent}]}
                   accessibilityRole="button"
-                  accessibilityLabel="Close"
+                  accessibilityLabel="关闭"
                   hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
                   <Icon name="x" size={18} color={colors.primaryText} />
                 </TouchableOpacity>
@@ -142,7 +142,7 @@ function CustomBottomSheetComponent({
     colors.secondaryContainerColor,
     colors.secondaryAccent,
     colors.primaryText,
-    handleClosePress,
+    handle关闭Press,
     showIndicator,
     indicatorStyles,
   ]);
@@ -162,7 +162,7 @@ function CustomBottomSheetComponent({
       headerAlwaysVisible={!!header}
       CustomHeaderComponent={renderHeader}
       onOpen={handleOpen}
-      onClose={handleClose}
+      on关闭={handle关闭}
       enableGesturesInScrollView={true}
       statusBarTranslucent={true}
       drawUnderStatusBar={true}

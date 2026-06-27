@@ -26,7 +26,7 @@ const HomeScreen = () => {
     yearMonth,
     availableYears,
     totalSpent,
-    transactionCount,
+    笔记录Count,
     avgPerDay,
     handleMonthYearSelect,
   } = useHome();
@@ -68,7 +68,7 @@ const HomeScreen = () => {
 
         <View style={[gs.rowCenter, gs.gap8, gs.mt4]}>
           <PrimaryText size={11} color={colors.buttonText} variant="number" style={{opacity: 0.7}}>
-            {transactionCount} transaction{transactionCount === 1 ? '' : 's'}
+            {笔记录Count} 笔记录{笔记录Count === 1 ? '' : 's'}
           </PrimaryText>
           {/* <PrimaryText size={11} color={colors.buttonText} style={{opacity: 0.7}}>·</PrimaryText>
           <PrimaryText size={11} color={colors.buttonText} variant="number" style={{opacity: 0.7}}>
@@ -77,7 +77,7 @@ const HomeScreen = () => {
         </View>
       </TouchableOpacity>
     ),
-    [selectedMonthName, selectedYear, currencySymbol, totalSpent, transactionCount, avgPerDay, colors, openMonthPicker],
+    [selectedMonthName, selectedYear, currencySymbol, totalSpent, 笔记录Count, avgPerDay, colors, openMonthPicker],
   );
 
   const listEmpty = useMemo(
@@ -93,7 +93,7 @@ const HomeScreen = () => {
     <>
       <PrimaryView colors={colors} useBottomPadding={false} useSidePadding={false}>
         <View style={[gs.px16, gs.mb15]}>
-          <HeaderContainer headerText={`Hey, ${userName}`} />
+          <HeaderContainer headerText={`嗨， ${userName}`} />
         </View>
         <TransactionList
           currencySymbol={currencySymbol}
@@ -112,7 +112,7 @@ const HomeScreen = () => {
           style={[gs.size50, gs.rounded8, gs.center, {backgroundColor: colors.secondaryBackground}]}
           onPress={() => navigate('AddTransactionsScreen')}
           hitSlop={hitSlop}
-          accessibilityLabel="Add new transaction"
+          accessibilityLabel="Add new 笔记录"
           accessibilityRole="button">
           <Icon name="plus-circle" size={30} color={colors.primaryText} />
         </TouchableOpacity>

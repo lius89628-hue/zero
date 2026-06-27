@@ -15,12 +15,12 @@ const ChooseCurrencyScreen = () => {
   return (
     <PrimaryView colors={colors} dismissKeyboardOnTouch>
       <View style={gs.pt15p}>
-        <PrimaryText size={28} weight="bold">Choose your</PrimaryText>
-        <PrimaryText size={28} weight="bold">currency</PrimaryText>
+        <PrimaryText size={28} weight="bold">选择你的</PrimaryText>
+        <PrimaryText size={28} weight="bold">货币</PrimaryText>
       </View>
 
       <PrimaryText size={14} color={colors.secondaryText} style={gs.mt6}>
-        Select the currency you use daily
+        Select the 货币 you use daily
       </PrimaryText>
 
       <View
@@ -40,7 +40,7 @@ const ChooseCurrencyScreen = () => {
           style={[gs.px15, gs.h48, gs.wFull, gs.fontMedium, gs.noFontPadding, {color: colors.primaryText}]}
           value={search}
           onChangeText={handleSearch}
-          placeholder={'Search currency...'}
+          placeholder={'Search 货币...'}
           placeholderTextColor={colors.secondaryText}
         />
       </View>
@@ -53,7 +53,7 @@ const ChooseCurrencyScreen = () => {
         />
       </ScrollView>
 
-      <PrimaryButton onPress={handleCurrencySubmit} colors={colors} buttonTitle={'Continue'} />
+      <PrimaryButton onPress={handleCurrencySubmit} colors={colors} buttonTitle={'继续'} />
     </PrimaryView>
   );
 };

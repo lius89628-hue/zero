@@ -23,7 +23,7 @@ const DialogContext = createContext<DialogContextType | undefined>(undefined);
 
 interface InternalDialog extends DialogConfig {
   resolve: (value: boolean) => void;
-  showCancel: boolean;
+  show取消: boolean;
 }
 
 const TYPE_ICON: Record<DialogType, string> = {
@@ -85,7 +85,7 @@ export const DialogProvider: React.FC<DialogProviderProps> = ({children}) => {
   const showDialog = useCallback(
     (config: DialogConfig): Promise<boolean> => {
       return new Promise(resolve => {
-        enqueue({...config, resolve, showCancel: true});
+        enqueue({...config, resolve, show取消: true});
       });
     },
     [enqueue],
@@ -97,7 +97,7 @@ export const DialogProvider: React.FC<DialogProviderProps> = ({children}) => {
         enqueue({
           ...config,
           resolve: () => resolve(),
-          showCancel: false,
+          show取消: false,
         });
       });
     },
@@ -151,17 +151,17 @@ export const DialogProvider: React.FC<DialogProviderProps> = ({children}) => {
                   gs.rowCenter,
                   gs.mt15,
                   gs.gap12,
-                  {justifyContent: display?.showCancel ? 'space-between' : 'center'},
+                  {justifyContent: display?.show取消 ? 'space-between' : 'center'},
                 ]}>
-                {display?.showCancel && (
+                {display?.show取消 && (
                   <TouchableOpacity
                     onPress={() => dismiss(false)}
                     activeOpacity={0.7}
-                    accessibilityLabel={display.cancelLabel ?? 'Cancel'}
+                    accessibilityLabel={display.cancelLabel ?? '取消'}
                     accessibilityRole="button">
                     <View style={[gs.w60, gs.h35, gs.rounded5, gs.center, {backgroundColor: colors.accentRed}]}>
                       <PrimaryText size={13} weight="semibold" color={colors.sameWhite}>
-                        {display.cancelLabel ?? 'Cancel'}
+                        {display.cancelLabel ?? '取消'}
                       </PrimaryText>
                     </View>
                   </TouchableOpacity>
@@ -169,11 +169,11 @@ export const DialogProvider: React.FC<DialogProviderProps> = ({children}) => {
                 <TouchableOpacity
                   onPress={() => dismiss(true)}
                   activeOpacity={0.7}
-                  accessibilityLabel={display?.okLabel ?? 'Ok'}
+                  accessibilityLabel={display?.okLabel ?? '确定'}
                   accessibilityRole="button">
                   <View style={[gs.w60, gs.h35, gs.rounded5, gs.center, {backgroundColor: colors.accentGreen}]}>
                     <PrimaryText size={13} weight="semibold" color={colors.buttonText}>
-                      {display?.okLabel ?? 'Ok'}
+                      {display?.okLabel ?? '确定'}
                     </PrimaryText>
                   </View>
                 </TouchableOpacity>
