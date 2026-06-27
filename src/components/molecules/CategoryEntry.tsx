@@ -285,7 +285,7 @@ const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
       <PrimaryButton
         onPress={handleAddFromDefaultOrAddCategory}
         colors={colors}
-        buttonTitle={isAddButton ? 'Add' : 'Update'}
+        buttonTitle={isAddButton ? '添加' : '更新'}
         disabled={!isValid && selectedCategories.length === 0}
       />
     </PrimaryView>

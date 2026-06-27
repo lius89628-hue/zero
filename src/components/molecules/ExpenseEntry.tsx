@@ -29,7 +29,7 @@ interface ExpenseEntryProps {
 
 const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
   const expenseData = route?.params;
-  const isAddButton = type === '添加';
+  const isAddButton = type === 'Add';
   const [hasInteracted, setHasInteracted] = useState(false);
   const categories = useSelector(selectActiveCategories);
   const [selectedCategories, setSelectedCategories] = useState<CategoryDocType[]>(
@@ -64,7 +64,7 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
   }, [dispatch]);
 
   const handleAddCategory = useCallback(() => {
-    navigate('添加分类Screen');
+    navigate('AddCategoryScreen');
   }, []);
 
   const handleTextInputFocus = useCallback(() => {
@@ -129,7 +129,7 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
     dispatch,
   ]);
 
-  const toggle分类Selection = useCallback(
+  const toggleCategorySelection = useCallback(
     (category: CategoryDocType) => {
       if (selectedCategories.includes(category)) {
         setSelectedCategories([]);
@@ -205,7 +205,7 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
         createdAt={createdAt}
         showDatePicker={showDatePicker}
         setCreatedAt={setCreatedAt}
-        label="Date"
+        label="日期"
       />
 
       <PrimaryText size={12} color={colors.secondaryText} style={gs.mb8}>分类</PrimaryText>
@@ -213,13 +213,13 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
         <CategoryContainer
           categories={categories}
           colors={colors}
-          toggle分类Selection={toggle分类Selection}
+          toggleCategorySelection={toggleCategorySelection}
           selectedCategories={selectedCategories}
         />
         <PrimaryButton
           onPress={handleAddCategory}
           colors={colors}
-          button标题="添加 分类"
+          buttonTitle="添加 分类"
           variant="ghost"
           size="sm"
           fullWidth={false}
@@ -229,7 +229,7 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
         <PrimaryButton
           onPress={isAddButton ? handleAddExpense : handleUpdateExpense}
           colors={colors}
-          button标题={isAddButton ? '添加' : '更新'}
+          buttonTitle={isAddButton ? '添加' : '更新'}
           disabled={!isValid}
         />
       </View>

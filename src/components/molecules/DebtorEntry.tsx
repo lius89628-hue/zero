@@ -118,7 +118,7 @@ const DebtorEntry: React.FC<DebtorEntryProps> = ({type, route}) => {
       <PrimaryButton
         onPress={isAddButton ? handleAddDebtor : handleUpdateDebtor}
         colors={colors}
-        buttonTitle={isAddButton ? 'Add' : 'Update'}
+        buttonTitle={isAddButton ? '添加' : '更新'}
         disabled={!isValid}
       />
     </PrimaryView>
