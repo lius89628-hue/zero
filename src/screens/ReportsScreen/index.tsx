@@ -15,7 +15,7 @@ import {SheetManager} from 'react-native-actions-sheet';
 import Icon from '../../components/atoms/Icons';
 import {gs} from '../../styles/globalStyles';
 
-const 报表Screen = () => {
+const ReportsScreen = () => {
   const {
     colors,
     selectedYear,
@@ -284,4 +284,4 @@ const 报表Screen = () => {
   );
 };
 
-export default 报表Screen;
+export default ReportsScreen;

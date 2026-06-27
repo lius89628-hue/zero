@@ -26,7 +26,7 @@ const DatePickerSheet: React.FC<SheetProps<'date-picker-sheet'>> = props => {
     SheetManager.hide(props.sheetId);
   }, [props.payload, props.sheetId, tempDate]);
 
-  const handle取消 = useCallback(() => {
+  const handleCancel = useCallback(() => {
     SheetManager.hide(props.sheetId);
   }, [props.sheetId]);
 
@@ -34,7 +34,7 @@ const DatePickerSheet: React.FC<SheetProps<'date-picker-sheet'>> = props => {
     <CustomBottomSheet sheetId={props.sheetId} header={null} showIndicator={true} gestureEnabled>
       <View style={gs.pb20}>
         <View style={[gs.rowBetween, gs.px20, gs.py10]}>
-          <TouchableOpacity onPress={handle取消} style={gs.p5}>
+          <TouchableOpacity onPress={handleCancel} style={gs.p5}>
             <PrimaryText color={colors.accentRed}>取消</PrimaryText>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleConfirm} style={gs.p5}>

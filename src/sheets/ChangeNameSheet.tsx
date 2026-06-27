@@ -14,7 +14,7 @@ const ChangeNameSheet: React.FC<SheetProps<'change-name-sheet'>> = React.memo(pr
 
   const handleConfirm = useCallback(() => {
     if (nameSchema.safeParse(name).success) {
-      props.payload?.on更新?.(name);
+      props.payload?.onUpdate?.(name);
     }
     void SheetManager.hide(props.sheetId);
   }, [props, name]);

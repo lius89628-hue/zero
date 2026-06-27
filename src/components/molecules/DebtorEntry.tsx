@@ -34,9 +34,9 @@ const DebtorEntry: React.FC<DebtorEntryProps> = ({type, route}) => {
   const debtorData = route?.params;
   const isAddButton = type === 'Add';
   const dispatch = useDispatch<AppDispatch>();
-  const [debtorTitle, setDebtorTitle] = useState(isAddButton ? '' : debtorData?.debtor名称 ?? '');
+  const [debtorTitle, setDebtorTitle] = useState(isAddButton ? '' : debtorData?.debtorName ?? '');
   const [selectedCategories, setSelectedCategories] = useState<Array<DebtCategory>>(
-    isAddButton ? [] : debtCategories.filter(category => category.name === debtorData?.debtor类型),
+    isAddButton ? [] : debtCategories.filter(category => category.name === debtorData?.debtorType),
   );
   const userId = useSelector(selectUserId);
   const isValid = nameSchema.safeParse(debtorTitle).success;

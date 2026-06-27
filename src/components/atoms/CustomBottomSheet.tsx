@@ -9,10 +9,10 @@ import {gs} from '../../styles/globalStyles';
 
 export interface CustomBottomSheetHeader {
   title?: string;
-  show关闭Button?: boolean;
+  showCloseButton?: boolean;
   customComponent?: ReactNode;
   style?: StyleProp<ViewStyle>;
-  on关闭Press?: () => void;
+  onClosePress?: () => void;
 }
 
 export interface CustomBottomSheetProps {
@@ -28,7 +28,7 @@ export interface CustomBottomSheetProps {
   containerStyle?: StyleProp<ViewStyle>;
   indicatorStyle?: StyleProp<ViewStyle>;
   onOpen?: () => void;
-  on关闭?: () => void;
+  onClose?: () => void;
 }
 
 function CustomBottomSheetComponent({
@@ -44,7 +44,7 @@ function CustomBottomSheetComponent({
   containerStyle,
   indicatorStyle,
   onOpen,
-  on关闭,
+  onClose,
 }: Readonly<CustomBottomSheetProps>) {
   const colors = useThemeColors();
   const safeAreaInsets = useSafeAreaInsets();
@@ -69,13 +69,13 @@ function CustomBottomSheetComponent({
     onOpen?.();
   }, [onOpen]);
 
-  const handle关闭 = useCallback(() => {
-    on关闭?.();
-  }, [on关闭]);
+  const handleClose = useCallback(() => {
+    onClose?.();
+  }, [onClose]);
 
-  const handle关闭Press = useCallback(() => {
-    if (header?.on关闭Press) {
-      header.on关闭Press();
+  const handleClosePress = useCallback(() => {
+    if (header?.onClosePress) {
+      header.onClosePress();
     } else {
       SheetManager.hide(sheetId);
     }
@@ -120,9 +120,9 @@ function CustomBottomSheetComponent({
                   {header.title}
                 </PrimaryText>
               )}
-              {header.show关闭Button && (
+              {header.showCloseButton && (
                 <TouchableOpacity
-                  onPress={handle关闭Press}
+                  onPress={handleClosePress}
                   style={[gs.size35, gs.center, gs.rounded16, gs.ml12, {backgroundColor: colors.secondaryAccent}]}
                   accessibilityRole="button"
                   accessibilityLabel="关闭"
@@ -142,7 +142,7 @@ function CustomBottomSheetComponent({
     colors.secondaryContainerColor,
     colors.secondaryAccent,
     colors.primaryText,
-    handle关闭Press,
+    handleClosePress,
     showIndicator,
     indicatorStyles,
   ]);
@@ -162,7 +162,7 @@ function CustomBottomSheetComponent({
       headerAlwaysVisible={!!header}
       CustomHeaderComponent={renderHeader}
       onOpen={handleOpen}
-      on关闭={handle关闭}
+      onClose={handleClose}
       enableGesturesInScrollView={true}
       statusBarTranslucent={true}
       drawUnderStatusBar={true}

@@ -14,7 +14,7 @@ import {fetchDebtsByDebtor} from '../../redux/slice/debtDataSlice';
 import DatePicker from '../atoms/DatePicker';
 import {DebtsScreenProp} from '../../screens/AddDebtsScreen';
 import {getISODateTime} from '../../utils/dateUtils';
-import {expense金额Schema, expenseSchema} from '../../utils/validationSchema';
+import {expenseAmountSchema, expenseSchema} from '../../utils/validationSchema';
 import PrimaryText from '../atoms/PrimaryText';
 import {selectCurrencySymbol} from '../../redux/slice/currencyDataSlice';
 import {AppDispatch} from '../../redux/store';

@@ -11,7 +11,7 @@ import EmptyState from '../../components/atoms/EmptyState';
 import {formatCurrency} from '../../utils/numberUtils';
 import {gs, hitSlop} from '../../styles/globalStyles';
 
-const 债务Screen = () => {
+const DebtsScreen = () => {
   const {
     colors,
     allDebts,
@@ -137,4 +137,4 @@ const 债务Screen = () => {
   );
 };
 
-export default 债务Screen;
+export default DebtsScreen;

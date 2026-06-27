@@ -44,10 +44,10 @@ const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
   };
 
   const [selected图标, setSelected图标] = useState<string | null>(
-    isAddButton ? null : resolve图标Param(categoryData?.category图标),
+    isAddButton ? null : resolve图标Param(categoryData?.categoryIcon),
   );
   const [selected颜色, setSelected颜色] = useState<string | null>(
-    isAddButton ? '#808080' : resolve图标Param(categoryData?.category颜色),
+    isAddButton ? '#808080' : resolve图标Param(categoryData?.categoryColor),
   );
   const [selectedCategories, setSelectedCategories] = useState<Array<CategorySelection>>([]);
 
@@ -113,7 +113,7 @@ const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
   const handleOpen图标Picker = useCallback(() => {
     SheetManager.show('icon-picker-sheet', {
       payload: {
-        selected图标: selected图标 ?? undefined,
+        selectedIcon: selected图标 ?? undefined,
         onSelect: (icon: string) => {
           setSelected图标(icon);
           SheetManager.hide('icon-picker-sheet');
@@ -125,7 +125,7 @@ const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
   const handleOpen颜色Picker = useCallback(() => {
     SheetManager.show('color-picker-sheet', {
       payload: {
-        selected颜色: selected颜色 ?? undefined,
+        selectedColor: selected颜色 ?? undefined,
         onSelect: (color: string) => {
           setSelected颜色(color);
           SheetManager.hide('color-picker-sheet');
@@ -217,7 +217,7 @@ const CategoryEntry: React.FC<CategoryEntryProps> = ({type, route}) => {
                 gs.size32,
                 gs.roundedFull,
                 gs.center,
-                {backgroundColor: colors.container颜色},
+                {backgroundColor: colors.containerColor},
               ]}>
               <Icon
                 name={selected图标 ?? 'shapes'}

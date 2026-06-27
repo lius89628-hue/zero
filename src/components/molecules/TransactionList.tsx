@@ -206,11 +206,11 @@ const ExpenseRow: React.FC<ExpenseRowProps> = React.memo(
   },
 );
 
-const Inline撤销: React.FC<{
+const InlineUndo: React.FC<{
   colors: Colors;
-  on撤销: () => void;
+  onUndo: () => void;
   edgeToEdge: boolean;
-}> = memo(({colors, on撤销, edgeToEdge}) => (
+}> = memo(({colors, onUndo, edgeToEdge}) => (
   <View style={gs.mb5}>
     <View
       style={[
@@ -225,7 +225,7 @@ const Inline撤销: React.FC<{
         记录已删除
       </PrimaryText>
       <TouchableOpacity
-        onPress={on撤销}
+        onPress={onUndo}
         activeOpacity={0.7}
         style={[gs.py8, gs.px14, gs.rounded10, {backgroundColor: colors.accentGreen}]}>
         <PrimaryText size={12} weight="semibold" color={colors.buttonText}>
@@ -288,7 +288,7 @@ const TransactionItem: React.FC<TransactionItemProps> = React.memo(
       [expenses, dispatch, targetDate, targetMonth, setExpenses, setDeletedItemId],
     );
 
-    const handle撤销 = useCallback(() => {
+    const handleUndo = useCallback(() => {
       if (deletionTimeoutRef.current) {
         clearTimeout(deletionTimeoutRef.current);
         deletionTimeoutRef.current = null;
@@ -304,7 +304,7 @@ const TransactionItem: React.FC<TransactionItemProps> = React.memo(
         </PrimaryText>
         {expenses.map(item =>
           String(item.id) === deletedItemId ? (
-            <Inline撤销 key={String(item.id)} colors={colors} on撤销={handle撤销} edgeToEdge={edgeToEdge} />
+            <InlineUndo key={String(item.id)} colors={colors} onUndo={handleUndo} edgeToEdge={edgeToEdge} />
           ) : (
             <ExpenseRow
               key={String(item.id)}
