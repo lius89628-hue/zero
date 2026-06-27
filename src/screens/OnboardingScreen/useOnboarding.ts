@@ -5,6 +5,7 @@ import {fetchUserData, selectUserId} from '../../redux/slice/userIdSlice';
 import {navigate} from '../../utils/navigationUtils';
 import {createCategory} from '../../watermelondb/services';
 import {AppDispatch} from '../../redux/store';
+import defaultCategories from '../../../assets/jsons/defaultCategories.json';
 
 interface CategorySelection {
   name: string;
@@ -21,9 +22,12 @@ const useOnboarding = () => {
   const userId = useSelector(selectUserId);
 
   const dispatch = useDispatch<AppDispatch>();
-  const handleSkip = useCallback(() => {
+  const handleSkip = useCallback(async () => {
+    for (const category of defaultCategories) {
+      await createCategory(category.name, userId, category.icon ?? null, category.color ?? null);
+    }
     navigate('ChooseCurrencyScreen');
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     dispatch(fetchUserData());

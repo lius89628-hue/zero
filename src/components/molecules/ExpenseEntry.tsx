@@ -225,12 +225,19 @@ const ExpenseEntry: React.FC<ExpenseEntryProps> = ({type, route}) => {
           fullWidth={false}
         />
       </ScrollView>
+      {selectedCategories.length === 0 && (
+        <View style={gs.mb5}>
+          <PrimaryText size={12} color={colors.accentRed}>
+            请选择一个分类
+          </PrimaryText>
+        </View>
+      )}
       <View style={gs.mt5}>
         <PrimaryButton
           onPress={isAddButton ? handleAddExpense : handleUpdateExpense}
           colors={colors}
           buttonTitle={isAddButton ? '添加' : '更新'}
-          disabled={!isValid}
+          disabled={!isValid || selectedCategories.length === 0}
         />
       </View>
     </PrimaryView>
