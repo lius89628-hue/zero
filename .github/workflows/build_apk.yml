@@ -1,0 +1,59 @@
+name: Build APK (Chinese Version)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Generate signing key
+        run: |
+          keytool -genkey -v -keystore android/app/release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias release -storepass password -keypass password -dname "CN=Test, OU=Test, O=Test, L=Test, ST=Test, C=CN"
+          cat > android/keystore.properties <<EOF
+          ZERO_UPLOAD_STORE_FILE=release-key.jks
+          ZERO_UPLOAD_STORE_PASSWORD=password
+          ZERO_UPLOAD_KEY_ALIAS=release
+          ZERO_UPLOAD_KEY_PASSWORD=password
+          EOF
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build APK
+        run: cd android && ./gradlew assembleRelease
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: zero-zh-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2.3.5-zh
+          name: "zero 汉化版 v2.3.5"
+          body: "zero 极简记账汉化版 APK\n- 全界面汉化\n- 默认分类中文\n- 完全离线、无广告"
+          files: android/app/build/outputs/apk/release/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
