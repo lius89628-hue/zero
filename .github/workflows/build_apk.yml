@@ -36,8 +36,13 @@ jobs:
           ZERO_UPLOAD_KEY_PASSWORD=password
           EOF
 
+      - name: Install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 'latest'
+
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: bun install
 
       - name: Accept Android SDK licenses
         run: |
